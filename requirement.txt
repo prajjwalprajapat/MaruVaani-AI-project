@@ -1,0 +1,6 @@
+customtkinter
+requests
+pygame
+groq
+streamlit
+python-dotenv
