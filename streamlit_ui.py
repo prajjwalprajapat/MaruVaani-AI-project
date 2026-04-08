@@ -294,7 +294,7 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )        
-        return response.choices[0].message.content.strip()
+    return response.choices[0].message.content.strip()
     except Exception as e:
         st.error(f"Groq Translation Error: {str(e)}")
         return None
