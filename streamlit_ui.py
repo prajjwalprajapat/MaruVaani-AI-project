@@ -174,9 +174,9 @@ def translate_to_marwadi(english_text):
             f"Now, translate this exactly into Bikaneri Marwadi: '{english_text}'"
         )
 def translate_to_marwadi(english_text):
-    try:
-        client = Groq(api_key=GROQ_API_KEY)
+    client = Groq(api_key=GROQ_API_KEY)
 
+    try:
         prompt = f"Translate this into pure Bikaneri Marwadi: '{english_text}'"
 
         response = client.chat.completions.create(
@@ -185,8 +185,7 @@ def translate_to_marwadi(english_text):
             temperature=0.1,
         )
 
-        result = response.choices[0].message.content.strip()
-        return result
+        return response.choices[0].message.content.strip()
 
     except Exception as e:
         st.error(f"Groq Translation Error: {str(e)}")
@@ -216,16 +215,14 @@ def generate_tts_audio(marwadi_text, voice_code):
 
         if response.status_code == 200:
             audio_base64 = response.json()["audios"][0]
-            audio_bytes = base64.b64decode(audio_base64)
-            return audio_bytes
-        else:
-            st.error(f"Sarvam API Error: {response.text}")
-            return None
+            return base64.b64decode(audio_base64)
+
+        st.error(f"Sarvam API Error: {response.text}")
+        return None
 
     except Exception as e:
         st.error(f"Audio Generation Error: {str(e)}")
         return None
-
 
 # ==========================================
 # 🖥️ STREAMLIT UI
