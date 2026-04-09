@@ -174,7 +174,10 @@ def translate_to_marwadi(english_text):
             f"Now, translate this exactly into Bikaneri Marwadi: '{english_text}'"
         )
 
-          try:
+        def translate_to_marwadi(english_text):
+    try:
+        client = Groq(api_key=GROQ_API_KEY)
+
         response = client.chat.completions.create(
             model="llama-3.3-70b-versatile",
             messages=[{"role": "user", "content": prompt}],
