@@ -185,11 +185,13 @@ def translate_to_marwadi(english_text):
             temperature=0.1,
         )
 
-        return response.choices[0].message.content.strip()
+        result = response.choices[0].message.content.strip()
+        return result
 
     except Exception as e:
         st.error(f"Groq Translation Error: {str(e)}")
         return None
+
 
 def generate_tts_audio(marwadi_text, voice_code):
     try:
@@ -214,7 +216,8 @@ def generate_tts_audio(marwadi_text, voice_code):
 
         if response.status_code == 200:
             audio_base64 = response.json()["audios"][0]
-            return base64.b64decode(audio_base64)
+            audio_bytes = base64.b64decode(audio_base64)
+            return audio_bytes
         else:
             st.error(f"Sarvam API Error: {response.text}")
             return None
