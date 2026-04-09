@@ -5,6 +5,7 @@ import os
 from groq import Groq
 from dotenv import load_dotenv
 
+
 # Load environment variables from .env file
 load_dotenv()
 
@@ -174,15 +175,15 @@ def translate_to_marwadi(english_text):
         )
 
         response = client.chat.completions.create(
-            model="llama-3.3-70b-versatile",
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0.1,
-        )
-        return response.choices[0].message.content.strip()
+    model="llama-3.3-70b-versatile",
+    messages=[{"role": "user", "content": prompt}],
+    temperature=0.1,
+)
+return response.choices[0].message.content.strip()
 
-    except Exception as e:
-        st.error(f"Groq Translation Error: {str(e)}")
-        return None
+except Exception as e:
+    st.error(f"Groq Translation Error: {str(e)}")
+    return None
 
 
 def generate_tts_audio(marwadi_text, voice_code):
@@ -225,6 +226,14 @@ st.markdown("Translate English to pure Bikaneri Marwadi and generate lifelike AI
 with st.sidebar:
     st.header("⚙️ Voice Settings")
 
+    # -------------------------------
+    # FEATURE SWITCHER (NEW)
+    # -------------------------------
+    feature = st.selectbox(
+        "🔧 Select Feature",
+        ["Translator", "Visiting Places"]
+    )
+
     if not GROQ_API_KEY or not SARVAM_API_KEY:
         st.error("⚠️ API Keys missing! Please check your .env file.")
         st.stop()
@@ -253,58 +262,104 @@ with st.sidebar:
         "📜 **History Mode**: Narrating the legends of Rajasthan's forts."
     ]
 
-    for feature in upcoming_features:
-        st.info(feature)
+    for feature_text in upcoming_features:   # ✅ FIXED
+        st.info(feature_text)
 
     st.markdown("---")
 
+
 # Main UI
-st.subheader("1. Enter English Text")
+if feature == "Translator":
 
-english_input = st.text_area(
-    "Type the English text you want to translate:",
-    height=100,
-    label_visibility="collapsed"
-)
+    st.subheader("1. Enter English Text")
 
-if st.button("Translate to Bikaneri ⚡", type="primary"):
-    if english_input.strip():
-        with st.spinner("Translating at lightning speed..."):
-            translation = translate_to_marwadi(english_input)
-            if translation:
-                st.session_state.marwadi_text = translation
-    else:
-        st.warning("Please enter some text to translate.")
+    english_input = st.text_area(
+        "Type the English text you want to translate:",
+        height=100,
+        label_visibility="collapsed"
+    )
 
-st.divider()
+    if st.button("Translate to Bikaneri ⚡", type="primary"):
+        if english_input.strip():
+            with st.spinner("Translating at lightning speed..."):
+                translation = translate_to_marwadi(english_input)
+                if translation:
+                    st.session_state.marwadi_text = translation
+        else:
+            st.warning("Please enter some text to translate.")
 
-st.subheader("2. Bikaneri Marwadi Translation")
-st.markdown("*(Review & Edit the translation below before generating audio)*")
+    st.divider()
 
-edited_marwadi = st.text_area(
-    "Edit Marwadi Text:",
-    value=st.session_state.marwadi_text,
-    height=120,
-    label_visibility="collapsed"
-)
+    st.subheader("2. Bikaneri Marwadi Translation")
+    st.markdown("*(Review & Edit the translation below before generating audio)*")
 
-if st.button("Generate & Speak 🔊", type="primary"):
-    if edited_marwadi.strip():
-        with st.spinner(f"Generating human-like audio using {selected_voice_label}..."):
-            audio_bytes = generate_tts_audio(edited_marwadi, selected_voice_code)
+    edited_marwadi = st.text_area(
+        "Edit Marwadi Text:",
+        value=st.session_state.marwadi_text,
+        height=120,
+        label_visibility="collapsed"
+    )
 
-            if audio_bytes:
-                st.success("Audio generated successfully!")
-                st.audio(audio_bytes, format="audio/wav")
+    if st.button("Generate & Speak 🔊", type="primary"):
+        if edited_marwadi.strip():
+            with st.spinner(f"Generating human-like audio using {selected_voice_label}..."):
+                audio_bytes = generate_tts_audio(edited_marwadi, selected_voice_code)
 
-                st.download_button(
-                    label="💾 Download .wav File",
-                    data=audio_bytes,
-                    file_name="maruvaani_audio.wav",
-                    mime="audio/wav"
-                )
-    else:
-        st.warning("Please ensure there is Marwadi text to speak.")
+                if audio_bytes:
+                    st.success("Audio generated successfully!")
+                    st.audio(audio_bytes, format="audio/wav")
+
+                    st.download_button(
+                        label="💾 Download .wav File",
+                        data=audio_bytes,
+                        file_name="maruvaani_audio.wav",
+                        mime="audio/wav"
+                    )
+        else:
+            st.warning("Please ensure there is Marwadi text to speak.")
+
+
+elif feature == "Visiting Places":
+
+    st.sidebar.title("📍 Select District")
+
+    district = st.sidebar.selectbox(
+        "Choose District",
+        ["Bikaner"]
+    )
+
+    places_data = {
+        "Bikaner": [
+            {
+                "name": "Junagarh Fort",
+                "image": "images/junagarh.jpg",
+                "desc": "Junagarh Fort is one of the few forts in Rajasthan not built on a hill. Built in 1589, it is known for its beautiful palaces, temples, and intricate architecture."
+            },
+            {
+                "name": "Karni Mata Temple",
+                "image": "images/karni_mata.jpg",
+                "desc": "Also known as the Rat Temple, it is famous for thousands of rats living freely inside. It is a unique spiritual and cultural attraction."
+            },
+            {
+                "name": "Lalgarh Palace",
+                "image": "images/lalgarh.jpg",
+                "desc": "A grand palace built in Indo-Saracenic style architecture. It reflects the royal heritage of Bikaner."
+            }
+        ]
+    }
+
+    st.title("🏜️ Visiting Places")
+    st.write(f"Showing places in **{district}**")
+
+    cols = st.columns(3)
+
+    for idx, place in enumerate(places_data[district]):
+        with cols[idx % 3]:
+            st.image(place["image"], use_container_width=True)
+            st.subheader(place["name"])
+            st.write(place["desc"])
+            st.markdown("---")
+
 
 # ==========================================
 # 🌟 FOOTER SECTION
