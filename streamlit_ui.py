@@ -173,8 +173,7 @@ def translate_to_marwadi(english_text):
 "English: 'Slow' -> Marwadi: 'धीरे।'"
             f"Now, translate this exactly into Bikaneri Marwadi: '{english_text}'"
         )
-
-       def translate_to_marwadi(english_text):
+ def translate_to_marwadi(english_text):
     try:
         client = Groq(api_key=GROQ_API_KEY)
 
@@ -191,7 +190,6 @@ def translate_to_marwadi(english_text):
     except Exception as e:
         st.error(f"Groq Translation Error: {str(e)}")
         return None
-
 
 def generate_tts_audio(marwadi_text, voice_code):
     try:
