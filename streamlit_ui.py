@@ -174,17 +174,18 @@ def translate_to_marwadi(english_text):
             f"Now, translate this exactly into Bikaneri Marwadi: '{english_text}'"
         )
 
+          try:
         response = client.chat.completions.create(
-    model="llama-3.3-70b-versatile",
-    messages=[{"role": "user", "content": prompt}],
-    temperature=0.1,
-)
-return response.choices[0].message.content.strip()
+            model="llama-3.3-70b-versatile",
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.1,
+        )
 
-except Exception as e:
-    st.error(f"Groq Translation Error: {str(e)}")
-    return None
+        return response.choices[0].message.content.strip()
 
+    except Exception as e:
+        st.error(f"Groq Translation Error: {str(e)}")
+        return None
 
 def generate_tts_audio(marwadi_text, voice_code):
     try:
