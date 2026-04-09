@@ -246,8 +246,10 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-    else:
-        st.success("✅ API Keys loaded.")
+        if st.button("Translate"):
+        do_something()
+    else:  # <-- Aligns perfectly with 'if'
+        do_something_else()
 
     voice_options = {
         "Ritu (Female)": "ritu",
