@@ -174,9 +174,11 @@ def translate_to_marwadi(english_text):
             f"Now, translate this exactly into Bikaneri Marwadi: '{english_text}'"
         )
 
-        def translate_to_marwadi(english_text):
+       def translate_to_marwadi(english_text):
     try:
         client = Groq(api_key=GROQ_API_KEY)
+
+        prompt = f"Translate this into pure Bikaneri Marwadi: '{english_text}'"
 
         response = client.chat.completions.create(
             model="llama-3.3-70b-versatile",
@@ -190,13 +192,16 @@ def translate_to_marwadi(english_text):
         st.error(f"Groq Translation Error: {str(e)}")
         return None
 
+
 def generate_tts_audio(marwadi_text, voice_code):
     try:
         url = "https://api.sarvam.ai/text-to-speech"
+
         headers = {
             "api-subscription-key": SARVAM_API_KEY,
             "Content-Type": "application/json"
         }
+
         payload = {
             "inputs": [marwadi_text],
             "target_language_code": "hi-IN",
