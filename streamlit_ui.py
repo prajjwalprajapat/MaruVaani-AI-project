@@ -173,7 +173,7 @@ def translate_to_marwadi(english_text):
 "English: 'Slow' -> Marwadi: 'धीरे।'"
             f"Now, translate this exactly into Bikaneri Marwadi: '{english_text}'"
         )
- def translate_to_marwadi(english_text):
+def translate_to_marwadi(english_text):
     try:
         client = Groq(api_key=GROQ_API_KEY)
 
