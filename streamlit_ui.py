@@ -27,7 +27,7 @@ if "marwadi_text" not in st.session_state:
 def translate_to_marwadi(english_text):
     try:
         client = Groq(api_key=GROQ_API_KEY)
-                prompt = (
+     prompt = (
             "You are an elder from Bikaner, Rajasthan. You speak the pure, authentic Bikaneri Marwadi dialect. "
             "Your task is to translate the following English text into 100% pure Bikaneri Marwadi. "
             "CRITICAL RULES: "
