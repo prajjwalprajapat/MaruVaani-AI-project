@@ -437,8 +437,6 @@ with st.sidebar:
     if not GROQ_API_KEY or not SARVAM_API_KEY:
         st.error("⚠️ API Keys missing! Please check your .env file.")
         st.stop()
-    else:
-        st.success("✅ API Keys loaded.")
 
     voice_options = {
         "Ritu (Female)": "ritu",
