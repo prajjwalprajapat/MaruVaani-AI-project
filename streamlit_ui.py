@@ -3500,9 +3500,8 @@ WORD_DICT = {
     "same": "एकसरीखो",
     "different": "अलग"
 }
-}
-}
-}
+
+
 
 # ==========================================
 # 🔄 PURE PYTHON RULE-BASED TRANSLATOR
