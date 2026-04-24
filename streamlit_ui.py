@@ -3519,7 +3519,7 @@ def translate_to_marwadi(english_text):
         return PHRASES_DICT[text_clean]
 
     # 2. Partial phrase scan (longest matching phrase first)
-    sorted_phrases = sorted(PHRASE_DICT.keys(), key=lambda x: -len(x))
+    sorted_phrases = sorted(PHRASES_DICT.keys(), key=lambda x: -len(x))
     for phrase in sorted_phrases:
         if phrase in text_lower:
             return PHRASE_DICT[phrase]
