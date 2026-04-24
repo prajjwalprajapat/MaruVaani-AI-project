@@ -3500,7 +3500,7 @@ WORD_DICT = {
     "same": "एकसरीखो",
     "different": "अलग"
 }
-}
+
 }
 
 
