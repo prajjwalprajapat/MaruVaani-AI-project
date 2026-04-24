@@ -3515,7 +3515,7 @@ def translate_to_marwadi(english_text):
     text_clean = re.sub(r"[?.!,]+$", "", text_lower).strip()
 
     # 1. Full phrase match (exact)
-    if text_clean in PHRASE_DICT:
+    if text_clean in PHRASES_DICT:
         return PHRASE_DICT[text_clean]
 
     # 2. Partial phrase scan (longest matching phrase first)
