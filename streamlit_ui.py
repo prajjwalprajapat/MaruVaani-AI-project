@@ -3520,9 +3520,9 @@ def translate_to_marwadi(english_text):
 
     # 2. Partial phrase scan (longest matching phrase first)
     sorted_phrases = sorted(PHRASES_DICT.keys(), key=lambda x: -len(x))
-    for phrase in sorted_phrases:
-        if phrase in text_lower:
-            return PHRASE_DICT[phrase]
+    for phrases in sorted_phrases:
+        if phrases in text_lower:
+            return PHRASES_DICT[phrase]
 
     # 3. Word-by-word translation with grammar rules
     words = re.findall(r"[a-zA-Z']+|[^\w\s]", text)
@@ -3535,8 +3535,8 @@ def translate_to_marwadi(english_text):
         # Try bigram first
         if i + 1 < len(words):
             bigram = word_lower + " " + words[i+1].lower()
-            if bigram in PHRASE_DICT:
-                translated.append(PHRASE_DICT[bigram])
+            if bigram in PHRASES_DICT:
+                translated.append(PHRASES_DICT[bigram])
                 i += 2
                 continue
             if bigram in WORD_DICT:
