@@ -27,7 +27,7 @@ if "marwadi_text" not in st.session_state:
 # --- Phrase-level dictionary (checked first, longest match wins) ---
 PHRASE_DICT = {
     # Greetings & Basic Conversation
-   PHRASES_DICT = {
+
     "how are you": "थे कियां हो?",
     "what is your name": "थारो नाम कांई है?",
     "i am fine": "मैं ठीक हूँ।",
